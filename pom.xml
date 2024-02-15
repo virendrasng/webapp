@@ -6,7 +6,7 @@
 
   <groupId>com.socgen</groupId>
   <artifactId>myapp</artifactId>
-  <version>SNAPSHOT</version>
+  <version>1.2-SNAPSHOTS</version>
 
   <name>myapp</name>
   <!-- FIXME change it to the project's website -->
