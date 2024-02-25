@@ -5,8 +5,6 @@ pipeline {
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        // testing
-
         maven "maven-3.9.6"
     }
 
