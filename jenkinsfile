@@ -1,33 +1,49 @@
 pipeline {
     //agent any
     //agent { label 'docker-label' }
-    agent { label 'custom-labels' }
+    agent none
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven "maven-3.9.6"
+        maven 'maven-3.9.6'
     }
 
     stages {
-        stage('Build') {
-            steps {
-                // Get some code from a GitHub repository
-                //git 'https://github.com/virendrasng/webapp.git'
-                checkout scm
+        parallel {
+            stage('Build1') {
+                agent { label 'custom-labels' }
+                steps {
+                    // Get some code from a GitHub repository
+                    //git 'https://github.com/virendrasng/webapp.git'
+                    checkout scm
 
-                // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true -s settings.xml clean deploy"
+                    // Run Maven on a Unix agent.
+                    sh 'mvn -Dmaven.test.failure.ignore=true -s settings.xml clean deploy'
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                }
+                post {
+                    // If Maven was able to run the tests, even if some of the test
+                    // failed, record the test results and archive the jar file.
+                    success {
+                        junit '**/target/surefire-reports/TEST-*.xml'
+                        archiveArtifacts 'target/*.jar'
+                    }
+                }
             }
 
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
+            stage('Build2') {
+                agent { label 'maven-labels' }
+                steps {
+                    checkout scm
+                    sh 'mvn -Dmaven.test.failure.ignore=true -s settings.xml clean deploy'
+                }
+                post {
+                    success {
+                        junit '**/target/surefire-reports/TEST-*.xml'
+                        archiveArtifacts 'target/*.jar'
+                    }
                 }
             }
         }
