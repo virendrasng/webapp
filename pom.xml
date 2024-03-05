@@ -6,7 +6,7 @@
 
   <groupId>com.socgen</groupId>
   <artifactId>myapp</artifactId>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.7-SNAPSHOT</version>
 
   <name>myapp</name>
   <!-- FIXME change it to the project's website -->
@@ -78,14 +78,14 @@
       <uniqueVersion>false</uniqueVersion>
       <id>webapp_releases</id>
       <name>webapp_releases</name>
-      <url>http://43.204.141.203:8081/nexus/content/repositories/webapp_releases/</url>
+      <url>http://52.66.249.77:8081/nexus/content/repositories/webapp_releases/</url>
       <layout>default</layout>
     </repository>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>webapp_snapshots</id>
       <name>webapp_snapshots</name>
-      <url>http://43.204.141.203:8081/nexus/content/repositories/webapp_snapshots/</url>
+      <url>http://52.66.249.77:8081/nexus/content/repositories/webapp_snapshots/</url>
       <layout>legacy</layout>
     </snapshotRepository>
   </distributionManagement>
